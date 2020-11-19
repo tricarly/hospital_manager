@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suyi.mapper.RelationshipMapper">
+  <resultMap id="BaseResultMap" type="com.suyi.domain.Relationship">
+    <result column="docid" jdbcType="INTEGER" property="docid" />
+    <result column="depid" jdbcType="INTEGER" property="depid" />
+  </resultMap>
+  <select id="selectByDepid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from relationship
+    where depid=#{depid}
+  </select>
+  <select id="selectByDocid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select *
+    from relationship
+    where docid=#{docid}
+  </select>
+
+  <delete id="deleteByDocid" parameterType="java.lang.Integer">
+    delete from relationship
+    where docid=#{docid}
+  </delete>
+  <insert id="insert" parameterType="com.suyi.domain.Relationship">
+    insert into relationship (docid, depid)
+    values (#{docid,jdbcType=INTEGER}, #{depid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.suyi.domain.Relationship">
+    insert into relationship
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="docid != null">
+        docid,
+      </if>
+      <if test="depid != null">
+        depid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="docid != null">
+        #{docid,jdbcType=INTEGER},
+      </if>
+      <if test="depid != null">
+        #{depid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

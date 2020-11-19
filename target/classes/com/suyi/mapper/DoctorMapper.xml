@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suyi.mapper.DoctorMapper">
+  <resultMap id="BaseResultMap" type="com.suyi.domain.Doctor">
+    <id column="did" jdbcType="INTEGER" property="did" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="cardno" jdbcType="VARCHAR" property="cardno" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="birthday" jdbcType="TIMESTAMP" property="birthday" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="education" jdbcType="INTEGER" property="education" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <!--<collection property="departmentList" ofType="com.suyi.domain.Department">
+      <id column="dno" property="dno"/>
+      <result column="dname" property="dname"/>
+    </collection>-->
+  </resultMap>
+  <sql id="Base_Column_List">
+    did, name, cardno, phone, sex, birthday, age, email, education, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doctor
+    where did = #{did,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select *
+    from doctor
+  </select>
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select *
+    from doctor
+    where name like concat('%',#{name},'%')
+  </select>
+  <select id="selectByPrimaryKeyAndName" resultMap="BaseResultMap">
+    select *
+    from doctor
+    where name like concat('%',#{name},'%') and did=#{did}
+  </select>
+  <!--<select id="selectDoctorAndDepartmentAll" resultMap="BaseResultMap">
+    select *
+    from doctor
+    left join relationship on did=docid
+    left join department on dno=depid
+  </select>-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from doctor
+    where did = #{did,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPrimaryKeyButch" parameterType="java.util.List">
+    delete from doctor
+    where did in
+    <foreach collection="list" open="(" close=")" separator="," item="did">
+      #{did}
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.suyi.domain.Doctor" useGeneratedKeys="true" keyProperty="did" keyColumn="">
+    insert into doctor (did, name, cardno, 
+      phone, sex, birthday, 
+      age, email, education, 
+      remark)
+    values (#{did,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{cardno,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{birthday,jdbcType=TIMESTAMP}, 
+      #{age,jdbcType=INTEGER}, #{email,jdbcType=VARCHAR}, #{education,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.suyi.domain.Doctor">
+    insert into doctor
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="did != null">
+        did,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="cardno != null">
+        cardno,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="education != null">
+        education,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="did != null">
+        #{did,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cardno != null">
+        #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        #{education,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.suyi.domain.Doctor">
+    update doctor
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cardno != null">
+        cardno = #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null">
+        education = #{education,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where did = #{did,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.suyi.domain.Doctor">
+    update doctor
+    set name = #{name,jdbcType=VARCHAR},
+      cardno = #{cardno,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      age = #{age,jdbcType=INTEGER},
+      email = #{email,jdbcType=VARCHAR},
+      education = #{education,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where did = #{did,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suyi.mapper.RegisterMapper">
+  <resultMap id="BaseResultMap" type="com.suyi.domain.Register">
+    <id column="rid" jdbcType="INTEGER" property="rid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="idcard" jdbcType="VARCHAR" property="idcard" />
+    <result column="sinumber" jdbcType="VARCHAR" property="sinumber" />
+    <result column="registermoney" jdbcType="VARCHAR" property="registermoney" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="ispay" jdbcType="INTEGER" property="ispay" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="consultation" jdbcType="INTEGER" property="consultation" />
+    <result column="department" jdbcType="INTEGER" property="department" />
+    <result column="did" jdbcType="INTEGER" property="did" />
+    <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    rid, name, idcard, sinumber, registermoney, phone, ispay, sex, age, consultation, 
+    department, did, createtime, state, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from register
+    where rid = #{rid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select *
+    from register
+  </select>
+  <select id="selectByPrimaryKeyAndNameAndDepartmentSelective" resultMap="BaseResultMap">
+    select *
+    from register
+    <where>
+      <if test="rid!=0">and rid=#{rid}</if>
+      <if test="name!=null and name!=''">and name like concat('%',#{name},'%')</if>
+      <if test="department!=0">and department=#{department}</if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from register
+    where rid = #{rid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.suyi.domain.Register">
+    insert into register (rid, name, idcard, 
+      sinumber, registermoney, phone, 
+      ispay, sex, age, consultation, 
+      department, did, createtime, 
+      state, remark)
+    values (#{rid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, 
+      #{sinumber,jdbcType=VARCHAR}, #{registermoney,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{ispay,jdbcType=INTEGER}, #{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, #{consultation,jdbcType=INTEGER}, 
+      #{department,jdbcType=INTEGER}, #{did,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{state,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.suyi.domain.Register">
+    insert into register
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        rid,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="idcard != null">
+        idcard,
+      </if>
+      <if test="sinumber != null">
+        sinumber,
+      </if>
+      <if test="registermoney != null">
+        registermoney,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="ispay != null">
+        ispay,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="consultation != null">
+        consultation,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="did != null">
+        did,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="sinumber != null">
+        #{sinumber,jdbcType=VARCHAR},
+      </if>
+      <if test="registermoney != null">
+        #{registermoney,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="ispay != null">
+        #{ispay,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="consultation != null">
+        #{consultation,jdbcType=INTEGER},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=INTEGER},
+      </if>
+      <if test="did != null">
+        #{did,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.suyi.domain.Register">
+    update register
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null">
+        idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="sinumber != null">
+        sinumber = #{sinumber,jdbcType=VARCHAR},
+      </if>
+      <if test="registermoney != null">
+        registermoney = #{registermoney,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="ispay != null">
+        ispay = #{ispay,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="consultation != null">
+        consultation = #{consultation,jdbcType=INTEGER},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=INTEGER},
+      </if>
+      <if test="did != null">
+        did = #{did,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.suyi.domain.Register">
+    update register
+    set name = #{name,jdbcType=VARCHAR},
+      idcard = #{idcard,jdbcType=VARCHAR},
+      sinumber = #{sinumber,jdbcType=VARCHAR},
+      registermoney = #{registermoney,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      ispay = #{ispay,jdbcType=INTEGER},
+      sex = #{sex,jdbcType=INTEGER},
+      age = #{age,jdbcType=INTEGER},
+      consultation = #{consultation,jdbcType=INTEGER},
+      department = #{department,jdbcType=INTEGER},
+      did = #{did,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      state = #{state,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+</mapper>

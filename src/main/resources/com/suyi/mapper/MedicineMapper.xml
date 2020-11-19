@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.suyi.mapper.MedicineMapper">
+  <resultMap id="BaseResultMap" type="com.suyi.domain.Medicine">
+    <id column="mid" jdbcType="INTEGER" property="mid" />
+    <result column="picture" jdbcType="VARCHAR" property="picture" />
+    <result column="inprice" jdbcType="DOUBLE" property="inprice" />
+    <result column="salprice" jdbcType="DOUBLE" property="salprice" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="descs" jdbcType="VARCHAR" property="descs" />
+    <result column="qualitydate" jdbcType="INTEGER" property="qualitydate" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="producefirm" jdbcType="VARCHAR" property="producefirm" />
+    <result column="readme" jdbcType="VARCHAR" property="readme" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    mid, picture, inprice, salprice, name, type, descs, qualitydate, description, producefirm,
+    readme, remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from medicine
+    where mid = #{mid,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select *
+    from medicine
+  </select>
+  <select id="selectByNameAndType" resultMap="BaseResultMap">
+    select *
+    from medicine
+    <where>
+      <if test="name!=null and name!=''">
+        and name like concat('%',#{name},'%')
+      </if>
+      <if test="type!=0">
+        and type=#{type}
+      </if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from medicine
+    where mid = #{mid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByPrimaryKeyButch" parameterType="java.util.List">
+    delete from medicine
+    where mid in
+    <foreach collection="list" open="(" close=")" separator="," item="mid">
+      #{mid}
+    </foreach>
+  </delete>
+  <insert id="insert" parameterType="com.suyi.domain.Medicine">
+    insert into medicine (mid, picture, inprice,
+      salprice, name, type,
+      descs, qualitydate, description,
+      producefirm, readme, remark
+      )
+    values (#{mid,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR}, #{inprice,jdbcType=DOUBLE}, 
+      #{salprice,jdbcType=DOUBLE}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{descs,jdbcType=VARCHAR}, #{qualitydate,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{producefirm,jdbcType=VARCHAR}, #{readme,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.suyi.domain.Medicine">
+    insert into medicine
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mid != null">
+        mid,
+      </if>
+      <if test="picture != null">
+        picture,
+      </if>
+      <if test="inprice != null">
+        inprice,
+      </if>
+      <if test="salprice != null">
+        salprice,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="descs != null">
+        descs,
+      </if>
+      <if test="qualitydate != null">
+        qualitydate,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="producefirm != null">
+        producefirm,
+      </if>
+      <if test="readme != null">
+        readme,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mid != null">
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="picture != null">
+        #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="inprice != null">
+        #{inprice,jdbcType=DOUBLE},
+      </if>
+      <if test="salprice != null">
+        #{salprice,jdbcType=DOUBLE},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="descs != null">
+        #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="qualitydate != null">
+        #{qualitydate,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="producefirm != null">
+        #{producefirm,jdbcType=VARCHAR},
+      </if>
+      <if test="readme != null">
+        #{readme,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.suyi.domain.Medicine">
+    update medicine
+    <set>
+      <if test="picture != null">
+        picture = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="inprice != null">
+        inprice = #{inprice,jdbcType=DOUBLE},
+      </if>
+      <if test="salprice != null">
+        salprice = #{salprice,jdbcType=DOUBLE},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="descs != null">
+        descs = #{descs,jdbcType=VARCHAR},
+      </if>
+      <if test="qualitydate != null">
+        qualitydate = #{qualitydate,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="producefirm != null">
+        producefirm = #{producefirm,jdbcType=VARCHAR},
+      </if>
+      <if test="readme != null">
+        readme = #{readme,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.suyi.domain.Medicine">
+    update medicine
+    set picture = #{picture,jdbcType=VARCHAR},
+      inprice = #{inprice,jdbcType=DOUBLE},
+      salprice = #{salprice,jdbcType=DOUBLE},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      descs = #{descs,jdbcType=VARCHAR},
+      qualitydate = #{qualitydate,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      producefirm = #{producefirm,jdbcType=VARCHAR},
+      readme = #{readme,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where mid = #{mid,jdbcType=INTEGER}
+  </update>
+</mapper>
